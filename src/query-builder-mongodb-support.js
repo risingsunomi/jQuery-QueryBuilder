@@ -74,18 +74,27 @@
                         }
 
                         if (ope.accept_values) {
-                            if (!(rule.value instanceof Array)) {
-                                rule.value = [rule.value];
-                            }
+                            if(rule.value.indexOf(",") !== -1){
+                                var split_values = rule.value.split(",");
+                                split_values.forEach(function(v,i){
+                                    values.push(changeType(v, rule.type));
+                                });
+                            }else{
+                                if (!(rule.value instanceof Array)) {
+                                    rule.value = [rule.value];
+                                }
 
-                            rule.value.forEach(function(v, i) {
-                                values.push(changeType(v, rule.type));
-                            });
+                                rule.value.forEach(function(v, i) {
+                                    values.push(changeType(v, rule.type));
+                                });
+                            }
                         }
 
-                        var part = {};
-                        part[rule.field] = mdb.call(that, values);
-                        parts.push(part);
+                        for(var i = 0; i < values.length; i++){
+                            var part = {};
+                            part[rule.field] = mdb.call(that, [values[i]]);
+                            parts.push(part);
+                        }
                     }
                 });
 
