@@ -22,7 +22,7 @@
             begins_with:      function(v){ return {'$regex': '^'+escapeRegExp(v[0])}; },
             not_begins_with:  function(v){ return {'$regex': '^(?!'+escapeRegExp(v[0])+')'}; },
             contains:         function(v){ return {'$regex': escapeRegExp(v[0])}; },
-            not_contains:     function(v){ return {'$regex': '^(?!'+escapeRegExp(v[0])+')'}; },
+            not_contains:     function(v){ return {'$regex': '^((?!'+escapeRegExp(v[0])+').)*$'}; },
             ends_with:        function(v){ return {'$regex': escapeRegExp(v[0])+'$'}; },
             not_ends_with:    function(v){ return {'$regex': '.*[^'+escapeRegExp(v[0])+']$'}; },
             is_empty:         function(v){ return ''; },
